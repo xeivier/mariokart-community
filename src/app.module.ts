@@ -7,6 +7,7 @@ import { envSchema } from './config/env.schema';
 import { PrismaModule } from './prisma/prisma-db-client.module';
 import { UsersModule } from './users/users.module';
 import { UsersController } from './users/users.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -31,6 +32,8 @@ import { UsersController } from './users/users.controller';
     PrismaModule,
 
     UsersModule,
+
+    AuthModule,
   ],
 
   controllers: [
