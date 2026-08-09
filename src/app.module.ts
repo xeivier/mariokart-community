@@ -5,6 +5,8 @@ import { AppController } from './app.controller';
 import configuration from './config/configuration';
 import { envSchema } from './config/env.schema';
 import { PrismaModule } from './prisma/prisma-db-client.module';
+import { UsersModule } from './users/users.module';
+import { UsersController } from './users/users.controller';
 
 @Module({
   imports: [
@@ -27,8 +29,12 @@ import { PrismaModule } from './prisma/prisma-db-client.module';
     }),
 
     PrismaModule,
+
+    UsersModule,
   ],
 
-  controllers: [AppController],
+  controllers: [
+    AppController
+  ],
 })
 export class AppModule {}
