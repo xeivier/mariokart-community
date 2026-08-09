@@ -8,11 +8,9 @@ async function bootstrap() {
 
   const config = app.get(ConfigService);
 
-  const port = config.get<number>('PORT', 3000);
+  const port = config.getOrThrow<number>('app.port');
 
   await app.listen(port);
-
-  console.log(`🚀 Server running on http://localhost:${port}`);
 }
 
 bootstrap();
