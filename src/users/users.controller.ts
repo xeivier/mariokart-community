@@ -7,10 +7,14 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UsePipes,
 } from '@nestjs/common';
 
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { ZodValidationPipe } from '../common/pipes/zod-validation.pipe';
+import { createUserSchema } from './dto/create-user.schema';
+import type { CreateUserInput } from './dto/create-user.schema';
+import { updateUserSchema } from './dto/update-user.schema';
+import type { UpdateUserInput } from './dto/update-user.schema';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -28,16 +32,18 @@ export class UsersController {
   }
 
   @Post()
-  create(@Body() dto: CreateUserDto) {
-    return this.usersService.create(dto);
+  @UsePipes(new ZodValidationPipe(createUserSchema))
+  create(@Body() body: CreateUserInput) {
+    return this.usersService.create(body);
   }
 
   @Patch(':id')
+  @UsePipes(new ZodValidationPipe(updateUserSchema))
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() dto: UpdateUserDto,
+    @Body() body: UpdateUserInput,
   ) {
-    return this.usersService.update(id, dto);
+    return this.usersService.update(id, body);
   }
 
   @Delete(':id')
